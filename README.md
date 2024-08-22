@@ -1,1 +1,1 @@
-# FanOledCOntrol
+# FanOledControl
