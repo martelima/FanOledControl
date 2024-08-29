@@ -48,9 +48,18 @@ void setup() {
   _display.setTextSize(1);
   _display.setTextColor(WHITE, BLACK);
   _display.setCursor(0, 0);
-  _display.println("Screen initialized!");
+  _display.println("Iniciando sistema...");
+  _display.setTextSize(3);
+  _display.setCursor(0, 16);
+  _display.println(" MOURA");
+  _display.setCursor(0, 45);
+  _display.setTextSize(1);
+  _display.println("     MATERPILLAR");
+
+_display.setTextSize(1);
   _display.display();
-  delay(500);
+  
+  delay(5000);
   _display.clearDisplay();
 
   if(_drawStatusBar){
@@ -105,7 +114,7 @@ void loop() {
  */
 void drawLine(int xPos, int analogVal){
   int lineHeight = map(analogVal, MIN_ANALOG_INPUT, MAX_ANALOG_INPUT, 0, _graphHeight);
-  int yPos = _display.height() - lineHeight;
+  int yPos = _display.height() - lineHeight + 6;
   _display.drawFastVLine(xPos, yPos, lineHeight, SSD1306_WHITE);
 }
 
@@ -130,7 +139,8 @@ void drawStatusBar(int analogVal) {
 
    // erase status bar by drawing all black
   _display.fillRect(0, 0, _display.width(), 8, SSD1306_BLACK); 
-  
+
+  int SensorVelM=analogRead(A1);
   // Draw current val
   _display.setCursor(0, 0);
   _display.print("I:");
@@ -141,23 +151,23 @@ void drawStatusBar(int analogVal) {
  //_display.print("C");
 
  //temp
-  _display.setCursor(38, 0);
+  _display.setCursor(47, 0);
   _display.print("T:");
-  int valTemp=map(analogVal,0,1023,-100,100);
-  _display.setCursor(49, 0);
+  int valTemp=map(analogVal,0,1023,0,100);
+  _display.setCursor(58, 0);
   _display.print(valTemp);
-  _display.drawCircle( 75, 1, 1,SSD1306_WHITE);
-  _display.setCursor(78, 0);
+  _display.drawCircle( 77, 1, 1,SSD1306_WHITE);
+  _display.setCursor(80, 0);
   _display.print("C");
   
 
 //RPM
-  int valSMotor=analogRead(A1);
-  _display.setCursor(93, 0);
+  int SensorTemp=analogRead(A0);
+  _display.setCursor(99, 0);
   _display.print("R:");
-  int valRPM=map(valSMotor,0,1023,0,140);
-  int valRPMPWM=map(valSMotor,0,1023,0,255);
-  _display.setCursor(103, 0);
+  int valRPM=map(SensorTemp,0,1023,0,210);
+  int valRPMPWM=map(SensorTemp,0,1023,0,255);
+  _display.setCursor(110, 0);
   _display.print(valRPM);
   analogWrite(PinOutMotor,valRPMPWM);
   
